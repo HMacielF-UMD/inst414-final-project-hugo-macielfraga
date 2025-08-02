@@ -1,0 +1,13 @@
+attribute_name,description,data_type,example_value,unit
+name,Name of the track or playlist,string,Ninguém Explica Deus (feat. Gabriela Rocha) - Ao Vivo,—
+artists,Comma-separated artist names,string,"Preto no Branco, Gabriela Rocha",—
+uri,Spotify URI for the track or playlist,string,spotify:track:682XjN6L1Qhs5rXbuGSQKK,—
+file_name,Sanitized file name used for downloaded audio,string,"Ninguém Explica Deus (feat. Gabriela Rocha) - Ao Vivo - Preto no Branco, Gabriela Rocha",—
+downloaded,Whether the MP3 file was downloaded,boolean,False,—
+tempo,Estimated tempo (beats per minute),float,93.75,BPM
+mfcc_mean,Mean of Mel-frequency cepstral coefficients,float,-0.6776,—
+chroma_mean,Mean chroma vector across the track,float,0.3579,—
+zcr_mean,Mean zero crossing rate,float,0.0387,—
+spectral_centroid_mean,Mean of the spectral centroid (brightness of sound),float,2130.1881,Hz
+rms_mean,Root Mean Square energy (average signal amplitude),float,0.1656,—
+rms_scaled,Scaled (normalized) RMS value using StandardScaler,float,-0.1396,standardized unit
