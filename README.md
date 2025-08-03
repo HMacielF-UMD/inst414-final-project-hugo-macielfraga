@@ -118,7 +118,7 @@ inst414-final-project-hugo-macielfraga/
 ├── vis/
 │   └── visualizations.py       # Generate charts and graphs
 │
-├── main.py                     # (Currently placeholder)
+├── main.py                     
 ├── requirements.txt
 └── README.md
 ```

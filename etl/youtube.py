@@ -4,7 +4,7 @@ using yt-dlp for later audio analysis.
 """
 
 import yt_dlp
-import spotify
+from . import spotify
 import os
 import re
 import pandas as pd
@@ -28,7 +28,7 @@ def get_tracks_from_user_library() -> pd.DataFrame:
     Returns:
     - pd.DataFrame: DataFrame with track name, artists, album, uri, and file_name
     """
-    df = spotify.get_playlist_tracks()  # Already returns a DataFrame
+    df = spotify.get_playlist_tracks()
 
     # Add a sanitized filename column
     df['file_name'] = df.apply(
@@ -78,7 +78,7 @@ def download_track_from_youtube(filename, search_query, output_dir="data/audio")
         print(f"Failed to download {filename}: {e}")
         return False
 
-def download_tracks_from_user_library(df: pd.DataFrame, output_dir="data/audio") -> pd.DataFrame:
+def download_tracks_from_user_library(output_dir="data/audio") -> pd.DataFrame:
     """
     Downloads tracks listed in a DataFrame and updates a 'downloaded' column.
 
@@ -89,6 +89,7 @@ def download_tracks_from_user_library(df: pd.DataFrame, output_dir="data/audio")
     Returns:
     - pd.DataFrame: Updated DataFrame with a 'downloaded' boolean column
     """
+    df = get_tracks_from_user_library()
     df['downloaded'] = False
 
     for idx, row in df.iterrows():
