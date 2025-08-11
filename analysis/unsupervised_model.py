@@ -9,7 +9,7 @@ def run_kmeans_clustering(
     input_csv="data/processed/transformed_data.csv",
     labels_csv="data/provided/mood_relation.csv",
     output_csv="data/outputs/clustered_tracks.csv",
-    n_clusters=2
+    n_clusters=4
 ):
     """
     Runs KMeans clustering and appends true mood labels (if available).
