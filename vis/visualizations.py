@@ -49,7 +49,6 @@ def visualize_supervised(predictions_csv: str):
     plt.savefig(os.path.join(VIS_DIR, "supervised_prediction_counts.png"))
     plt.close()
 
-
 def visualize_unsupervised(cluster_csv: str):
     """
     Visualizes unsupervised clustering results: heatmap of clusters by mood and PCA plot.
@@ -121,9 +120,104 @@ def visualize_feature_correlations(features_csv: str):
     plt.savefig(os.path.join(VIS_DIR, "feature_correlation_heatmap.png"))
     plt.close()
 
+def visualize_feature_distributions(features_csv: str):
+    """
+    Creates multiple plots comparing audio features by mood:
+    - MFCC Mean vs Tempo
+    - Spectral Centroid vs Tempo
+    - Spectral Centroid vs RMS Scaled
+    - Chroma Mean vs MFCC Mean
+    - ZCR Mean vs RMS Scaled
+    - Boxplot of MFCC Mean by Mood
+    - Histogram of Tempo by Mood
+
+    Parameters:
+    - features_csv (str): Path to CSV with audio features and mood labels
+
+    Returns:
+    - None
+    """
+    df = pd.read_csv(features_csv)
+
+    # 1. MFCC Mean vs Tempo
+    if all(col in df.columns for col in ['tempo', 'mfcc_mean', 'mood']):
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x='tempo', y='mfcc_mean', hue='mood', data=df, alpha=0.7)
+        plt.title("MFCC Mean vs Tempo by Mood")
+        plt.xlabel("Tempo")
+        plt.ylabel("MFCC Mean")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "mfcc_vs_tempo_by_mood.png"))
+        plt.close()
+
+    # 2. Spectral Centroid vs Tempo
+    if all(col in df.columns for col in ['tempo', 'spectral_centroid_mean', 'mood']):
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x='tempo', y='spectral_centroid_mean', hue='mood', data=df, alpha=0.7)
+        plt.title("Spectral Centroid vs Tempo by Mood")
+        plt.xlabel("Tempo")
+        plt.ylabel("Spectral Centroid Mean")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "spectral_centroid_vs_tempo_by_mood.png"))
+        plt.close()
+
+    # 3. Spectral Centroid vs RMS Scaled
+    if all(col in df.columns for col in ['spectral_centroid_mean', 'rms_scaled', 'mood']):
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x='spectral_centroid_mean', y='rms_scaled', hue='mood', data=df, alpha=0.7)
+        plt.title("Spectral Centroid vs RMS Scaled by Mood")
+        plt.xlabel("Spectral Centroid Mean")
+        plt.ylabel("RMS Scaled")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "spectral_centroid_vs_rms_scaled_by_mood.png"))
+        plt.close()
+
+    # 4. Chroma Mean vs MFCC Mean
+    if all(col in df.columns for col in ['chroma_mean', 'mfcc_mean', 'mood']):
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x='chroma_mean', y='mfcc_mean', hue='mood', data=df, alpha=0.7)
+        plt.title("Chroma Mean vs MFCC Mean by Mood")
+        plt.xlabel("Chroma Mean")
+        plt.ylabel("MFCC Mean")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "chroma_vs_mfcc_by_mood.png"))
+        plt.close()
+
+    # 5. ZCR Mean vs RMS Scaled
+    if all(col in df.columns for col in ['zcr_mean', 'rms_scaled', 'mood']):
+        plt.figure(figsize=(8, 6))
+        sns.scatterplot(x='zcr_mean', y='rms_scaled', hue='mood', data=df, alpha=0.7)
+        plt.title("ZCR Mean vs RMS Scaled by Mood")
+        plt.xlabel("ZCR Mean")
+        plt.ylabel("RMS Scaled")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "zcr_vs_rms_scaled_by_mood.png"))
+        plt.close()
+
+    # 6. Boxplot: MFCC Mean by Mood
+    if all(col in df.columns for col in ['mfcc_mean', 'mood']):
+        plt.figure(figsize=(6, 5))
+        sns.boxplot(x='mood', y='mfcc_mean', data=df)
+        plt.title("MFCC Mean Distribution by Mood")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "boxplot_mfcc_by_mood.png"))
+        plt.close()
+
+    # 7. Histogram: Tempo by Mood
+    if all(col in df.columns for col in ['tempo', 'mood']):
+        plt.figure(figsize=(8, 6))
+        sns.histplot(data=df, x='tempo', hue='mood', kde=True, bins=20, element="step")
+        plt.title("Tempo Distribution by Mood")
+        plt.xlabel("Tempo")
+        plt.ylabel("Count")
+        plt.tight_layout()
+        plt.savefig(os.path.join(VIS_DIR, "histogram_tempo_by_mood.png"))
+        plt.close()
 
 
 if __name__ == "__main__":
     visualize_supervised("data/outputs/predicted_moods.csv")
     visualize_unsupervised("data/outputs/clustered_tracks.csv")
     visualize_feature_correlations("data/outputs/predicted_moods.csv")
+    visualize_feature_distributions("data/outputs/predicted_moods.csv")
+

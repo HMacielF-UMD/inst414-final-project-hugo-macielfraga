@@ -20,10 +20,10 @@ def main():
     df = youtube.download_tracks_from_user_library()
 
     print("=== STEP C: Extracting audio features ===")
-    extract.append_audio_features_to_df(df)
+    #extract.append_audio_features_to_df(df)
 
     print("=== STEP C.1: Transforming and tidying audio features ===")
-    transform.transform_features()
+    #transform.transform_features()
 
     print("=== STEP D: Running supervised model ===")
     supervised_model.train_classifier()
